@@ -21,7 +21,13 @@ PAdptArray CreateAdptArray(COPY_FUNC copyF_, DEL_FUNC delF_, PRINT_FUNC printF_)
         return NULL;
     }
     p->size = 0;
-    p->pElemArr = (PElement *)calloc(1, sizeof(PElement)); 
+    p->pElemArr = (PElement *)calloc(1, sizeof(PElement));
+    if (p->pElemArr == NULL)
+    {
+         printf("error in allocate memory");
+        return NULL;
+    }
+     
     p->delF = delF_;
     p->printF_ = printF_;
     p->copyF = copyF_;
