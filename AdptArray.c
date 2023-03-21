@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "AdptArray.h"
-
+// נעזרתי בקוד של פתרון השאלה ממועד א של תכנות מערכות 1
 typedef struct AdptArray_
 {
     int size;
@@ -21,18 +21,7 @@ PAdptArray CreateAdptArray(COPY_FUNC copyF_, DEL_FUNC delF_, PRINT_FUNC printF_)
         return NULL;
     }
     p->size = 0;
-    // p->pElemArr = (PElement*)calloc(1, sizeof(PElement));  // dynamically allocate memory for the pElemArr array
-    // if (p->pElemArr == NULL)
-    // {
-    //     printf("error in allocate memory");
-    //     exit(-1);
-    // }
-    // for (int i = 0; i < p->size; i++)
-    // {
-    //     p->pElemArr[i] = NULL;
-    // }
-    p->pElemArr = (PElement *)calloc(1, sizeof(PElement)); // dynamically allocate memory for the pElemArr array
-    // p->pElemArr = NULL;
+    p->pElemArr = (PElement *)calloc(1, sizeof(PElement)); 
     p->delF = delF_;
     p->printF_ = printF_;
     p->copyF = copyF_;
@@ -70,9 +59,12 @@ Result SetAdptArrayAt(PAdptArray p, int index, PElement NewElem)
         }
         else
         {
+            if (p->pElemArr[index]!= NULL)
+            {                       
             p->delF(p->pElemArr[index]);
             free(p->pElemArr[index]);
             p->pElemArr[index] = p->copyF(NewElem);
+            }
         }
         return SUCCESS;
     }
@@ -131,11 +123,6 @@ void PrintDB(PAdptArray p)
         printf("error");
         return;
     }
-    if (p->printF_ == NULL)
-    {
-        printf("error");
-        return;
-    }
     for (int i = 0; i < p->size; i++)
     {
         if (p->pElemArr[i] != NULL)
@@ -144,7 +131,3 @@ void PrintDB(PAdptArray p)
         }
     }
 }
-// int main()
-// {
-//     return 1;
-// }
